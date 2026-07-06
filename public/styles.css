@@ -1,0 +1,66 @@
+/* Custom, hand-written CSS only — Tailwind itself now loads via CDN (see index.html head),
+   replacing the old 4MB compiled Tailwind v2 file. This keeps the shipped CSS tiny. */
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Skip link */
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: #1d4ed8;
+    color: white;
+    padding: 0.5rem 1rem;
+    z-index: 100;
+    border-radius: 0 0 0.5rem 0;
+}
+.skip-link:focus { left: 0; }
+
+/* Visible, consistent focus states everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid #3ea6ff;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+::selection {
+    background: #3ea6ff;
+    color: #0f0f0f;
+}
+
+/* Custom scrollbar — this rule was previously written as invalid nested CSS
+   (a `::-webkit-scrollbar` block nested inside `.scroll-design {}` with no nesting
+   plugin configured) and silently did nothing. Flattened here so it actually applies. */
+.scroll-design::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.scroll-design::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scroll-design::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+}
+
+/* Clamp video card titles to 2 lines (Tailwind core doesn't ship line-clamp by default
+   without the typography/line-clamp plugin, which isn't available via the bare CDN build) */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
